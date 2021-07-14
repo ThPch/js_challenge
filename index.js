@@ -289,7 +289,7 @@ function findSmallestIntervall(numbers) {
     numbers.sort(function(a, b){return a-b});
     const result = numbers.reduce((acc,curr) => {
         if(acc.smallestIntervall) {
-            if(acc.smallestIntervall > (curr - acc.pastNumber)) {
+            if((curr - acc.pastNumber) < acc.smallestIntervall) {
                 acc.smallestIntervall = curr - acc.pastNumber 
             }
         } else {
