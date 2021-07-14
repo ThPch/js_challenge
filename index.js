@@ -237,28 +237,80 @@ const encode = (plainText) => {
 
 //TO DO
 function closestToZero(numbers) {
-    numbers.sort();
-    console.log(numbers)
-    let result = numbers.reduce((acc,curr) => {
-        if(curr<0){
-            if((0+curr) < acc) {
-                acc = curr;
+    let result = numbers.reduce((acc, curr) => {
+        if(curr == Math.abs(acc.closestToZero)) {
+            acc.closestToZero = curr;
+            acc.negative = false;
+        }
+        if(curr>0) {
+            if(acc.closestToZero) {
+                if(acc.negative) {
+                    if(Math.abs(curr) < Math.abs(acc.closestToZero)) {
+                        acc.closestToZero = curr;
+                        acc.negative = false;
+                    } 
+                } else {
+                    if(curr < acc.closestToZero) {
+                        acc.closestToZero = curr;
+                        acc.negative = false;
+                    } 
+                }
+            } else {
+                acc.closestToZero = curr;
             }
         } else {
-            if((0-curr) < acc) {
-                acc = curr;
+            if(acc.closestToZero) {
+                if(acc.negative) {
+                    if(Math.abs(curr) < Math.abs(acc.closestToZero)) {
+                        acc.closestToZero = curr;
+                        acc.negative = true;
+                    } 
+                } else {
+                    if(Math.abs(curr) < acc.closestToZero) {
+                        acc.closestToZero = curr;
+                        acc.negative = true;
+                    } 
+                }
+            } else {
+                acc.closestToZero = curr;
+                acc.negative = true;
             }
         }
 
         return acc;
-    },500000)
-    console.log(result)
+    }, {})
+    return result.closestToZero;
 }
 
-// console.log(closestToZero([ -5, -9, 2, 7, 8 ])); //Should return 2
+// console.log(closestToZero([ -5, -9, 7, 8, -1, 50, 1])); //Should return 1
 
+//TO DO
+function findSmallestIntervall(numbers) {
+    
+}
 
-
+// if(curr < 0 ) {
+//     // console.log(curr)
+//     if(acc.number && Math.abs(curr) < acc.number) {
+//         console.log(acc.number)
+//         acc.origin = curr;
+//         acc.number = Math.abs(curr);
+//     } else {
+//         acc["origin"] = curr;
+//         acc["number"] = Math.abs(curr);
+//         console.log(acc)
+//     }
+// } else {
+//     // console.log(curr)
+//     if(acc.number > curr) {
+//         acc.origin = curr;
+//         acc.number = curr;
+//     } else {
+//         acc.origin = curr;
+//         acc.number = curr;
+//     }
+// }
+// // console.log(acc)
 
 
 
