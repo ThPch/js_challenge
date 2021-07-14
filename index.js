@@ -284,60 +284,22 @@ function closestToZero(numbers) {
 
 // console.log(closestToZero([ -5, -9, 7, 8, -1, 50, 1])); //Should return 1
 
-//TO DO
+// Find the minimum difference between 2 numbers inside an array of n size 
 function findSmallestIntervall(numbers) {
-    
+    numbers.sort(function(a, b){return a-b});
+    const result = numbers.reduce((acc,curr) => {
+        if(acc.smallestIntervall) {
+            if(acc.smallestIntervall > (curr - acc.pastNumber)) {
+                acc.smallestIntervall = curr - acc.pastNumber 
+            }
+        } else {
+            acc.smallestIntervall = numbers[numbers.length-1] - numbers[0];
+        }
+        acc.pastNumber = curr;
+        return acc;
+    }, {})
+    return result.smallestIntervall;
 }
 
-// if(curr < 0 ) {
-//     // console.log(curr)
-//     if(acc.number && Math.abs(curr) < acc.number) {
-//         console.log(acc.number)
-//         acc.origin = curr;
-//         acc.number = Math.abs(curr);
-//     } else {
-//         acc["origin"] = curr;
-//         acc["number"] = Math.abs(curr);
-//         console.log(acc)
-//     }
-// } else {
-//     // console.log(curr)
-//     if(acc.number > curr) {
-//         acc.origin = curr;
-//         acc.number = curr;
-//     } else {
-//         acc.origin = curr;
-//         acc.number = curr;
-//     }
-// }
-// // console.log(acc)
 
-
-
-
-
-// function calculateTotalPrice(prices, discount) {
-//     prices.sort();
-//     let higherPrice = prices[prices.length-1]
-//     let sum = 0;
-//     if((0 <= discount)&&(discount<=100)) {
-//             if((0 < prices.length)&&(prices.length < 100)) {
-//                 prices.forEach(price => {
-//                     if((0 < price)&&(price < 100000)) {
-//                         if(price==higherPrice){
-//                             sum = price*(discount/100);
-//                         } else {
-//                             sum = price+sum
-//                         }
-//                     }
-//                     else{
-//                          console.error('Erreur avec le prix dun produit');
-//                          return 0;
-//                     }
-//                 });
-//         }
-//     }
-//     return sum;
-// }
-
-// console.log(calculateTotalPrice([100,400,200], 20))
+// console.log(findSmallestIntervall([80, 1, 4, 25, 12, 60, 78, 70])); //Should return 2
