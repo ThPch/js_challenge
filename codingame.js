@@ -303,3 +303,5 @@ function findSmallestIntervall(numbers) {
 
 
 // console.log(findSmallestIntervall([80, 1, 4, 25, 12, 60, 78, 70])); //Should return 2
+
+
