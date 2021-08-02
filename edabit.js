@@ -59,3 +59,45 @@ Best Solution :
 const shiftToLeft = (x, y) => x * 2 ** y
 */
 
+
+
+//Write a function that converts an object into an array, where each element represents a key-value pair in the form of an array.
+const toArray = (obj) => {
+    let result = [];
+    for (const [key, value] of Object.entries(obj)) {
+        let obj = [key, value];
+        result.push(obj);
+    } 
+    return result;
+}
+// console.log(toArray({ a: 1, b: 2 })) // [["a", 1], ["b", 2]]
+// console.log(toArray({ shrimp: 15, tots: 12 })) // [["shrimp", 15], ["tots", 12]]
+// console.log(toArray({})) // []
+/*
+Best Solution :
+function toArray(obj) {
+	return Object.entries(obj);
+}
+*/
+
+
+//Create a function that takes an array of numbers and return "Boom!" if the digit 7 appears in the array. Otherwise, return "there is no 7 in the array".
+const sevenBoom = (array) => {
+    let containsSeven = false;
+    array.forEach((e) => {
+        if(e.toString().indexOf("7") > -1){
+            containsSeven = true;
+        }
+    })
+
+    if(array.includes(7) || containsSeven) {
+        return "Boom!"
+    } 
+    else {
+        return "there is no 7 in the array"
+    }
+}
+console.log(sevenBoom([1, 2, 3, 4, 5, 6, 7])) // "Boom!" 7 contains the number seven.
+console.log(sevenBoom([8, 6, 33, 100])) // "there is no 7 in the array"  None of the items contain 7 within them.
+console.log(sevenBoom([2, 55, 60, 97, 86])) // "Boom!"  97 contains the number seven.
+console.log(sevenBoom([2, 55, 60, 1171, 86])) // "Boom!"  97 contains the number seven.
