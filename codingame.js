@@ -1,12 +1,13 @@
 //Should removes duplicated numbers of an array of numbers
 function filterDuplicates(data){
     let uniqueArray = data.filter(function(item, pos) {
+        console.log("Item : " + item + " Index Of : " + data.indexOf(item) + " Starting from index " + pos + " " )
         return data.indexOf(item) == pos;
     })
     return uniqueArray;
 }
 
-// console.log(filterDuplicates([7,3,6,4,3,3,4,9]))
+//console.log(filterDuplicates([7,3,6,4,3,3,4,9,7]))
 
 
 function computeMultiplesSum(n) {
@@ -29,20 +30,14 @@ function computeMultiplesSum(n) {
 
 
 function average(table) {
-    if(table.length == 0) {
-      return 0;
-    } else if (table.length > 0) {
-        var b = table.length,
-        c = 0, i;
-        for (i = 0; i < b; i++){
-        c += Number(table[i]);
-        }
-        console.log()
-        return c/b;
-    }
-  }
+    let result = table.reduce((acc, curr) => {
+        acc = acc + curr;
+        return acc;
+    })
+    return result/table.length;
+}
   
-// console.log(average([[0,1,2,3,4,6,7,8,9,10]]))
+//console.log(average([0,1,2,3,4,6,7,8,9,10]))
 
 
 // Write a function that returns the factorial of a number.
@@ -56,7 +51,7 @@ function factorial(n) {
 }
 
 //It will take a number and return the sum of all numbers from 1 up to the number passed in iteratively.
-const sumRange = (n) => {
+const sumzRange = (n) => {
     let sum = 0;
     for(let i = 1; i<= n ; i++){
         sum = i+sum;
@@ -64,7 +59,7 @@ const sumRange = (n) => {
     return sum;
 }
 
-// console.log(sumRange(6))
+//console.log(sumRange(6))
 
 //It will take a number and return the sum of all numbers from 1 up to the number passed in recursively.
 const sumRangeRecursive = (n) => {
@@ -111,13 +106,9 @@ function all(array, callback){
 // Write a function called productOfArray which takes in an array of numbers and returns the product of them all
 const productOfArray = (array) => {
     return array.reduce((acc,curr) => {
-        if(acc==0){
-            acc = curr;
-        } else {
             acc = acc*curr;
-        }
-        return acc;
-    }, 0)
+            return acc;
+    })
 }
 
 
@@ -129,7 +120,7 @@ function productOfArrayRecursively(array){
 	return array.shift() * productOfArray(array);
 }
 
-// console.log(productOfArray([1,2,3,10]))
+//console.log(productOfArray([1,2,3,10]))
 
 
 //Should check if a js object contains a value
@@ -202,9 +193,9 @@ function replicateRecursively(times, number){
 // console.log(replicate(3, 5)) // [5, 5, 5]
 // console.log(replicate(1, 69)) // [69]
 // console.log(replicate(-2, 6)) // []
-// console.log(replicateRecursively(7,9)) //[9,9,9,9,9,9,9]
+//console.log(replicateRecursively(7,9)) //[9,9,9,9,9,9,9]
 
-const encode = (plainText) => {
+const encode1 = (plainText) => {
     let tab = [];
     
     tab = plainText.split('');
@@ -232,11 +223,34 @@ const encode = (plainText) => {
     return result.encoded;
 }
 
-// console.log(encode("aaabbccaaaaccccccccccbbb")); //Should return a3b2c2a4c10b3
+function encode(str) {
+    strSplitted = str.split("");
+    let result = [];
+    strSplitted.reduce((acc, curr, index) => {
+        if(acc !== curr) {
+            result.push(index)
+            acc = curr;
+        }
+        return acc
+    })
+    result.push(strSplitted.length)
+
+    let encodedResult = strSplitted[0].concat(result[0]);
+    result.reduce((acc, curr) => {
+        encodedResult = encodedResult.concat(strSplitted[acc]).concat(curr-acc)
+        acc = curr
+        return acc
+    })
+    console.log(encodedResult)
+    
+}
+
+//console.log(encode("aaabbccaaaaccccccccccbbb")); //Should return a3b2c2a4c10b3
 
 
-//TO DO
 function closestToZero(numbers) {
+
+    if(numbers.includes(0)) return 0;
     let result = numbers.reduce((acc, curr) => {
         if(curr == Math.abs(acc.closestToZero)) {
             acc.closestToZero = curr;
@@ -282,7 +296,10 @@ function closestToZero(numbers) {
     return result.closestToZero;
 }
 
-// console.log(closestToZero([ -5, -9, 7, 8, -1, 50, 1])); //Should return 1
+ console.log(closestToZero([ -5, -9, 7, 8, -1, 50, 1])); //Should return 1
+ console.log(closestToZero([ -50, -6, 7, 8, -10, 50, 10])); //Should return -6
+ console.log(closestToZero([ -5, -9, 7, 8, 0 , -1, 50, 1])); //Should return 0
+ console.log(closestToZero([ -1, -5, -9, 7, 8, 0 , 50, 1])); //Should return 0
 
 // Find the minimum difference between 2 numbers inside an array of n size 
 function findSmallestIntervall(numbers) {
@@ -304,4 +321,16 @@ function findSmallestIntervall(numbers) {
 
 // console.log(findSmallestIntervall([80, 1, 4, 25, 12, 60, 78, 70])); //Should return 2
 
+function isTwin(a, b) {
+    let tempA = a.toLowerCase().split('')
+    let tempB = b.toLowerCase().split('')
+
+    tempA.sort()
+    tempB.sort()
+
+    return JSON.stringify(tempA) === JSON.stringify(tempB)
+}
+
+// console.log(isTwin("hello", "world"))
+// console.log(isTwin("bca", "acb"))
 
