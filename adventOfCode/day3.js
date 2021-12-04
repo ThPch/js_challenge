@@ -1058,5 +1058,3 @@ console.log(calculPowerConsumption(data))
 
 
 
-
-
