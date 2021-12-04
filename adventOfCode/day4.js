@@ -782,7 +782,9 @@ resultLine=checkBingo(bingoMatrix)
 resultColumn=checkBingo(columnsToRows(bingoMatrix))
 
 
-const tester = (arrayMatrixed, checkedNumber) => arrayMatrixed.every(v => numbers.includes(v))
+/*================================================================================
+                            LE CODE CI DESSOUS FOU LA HAINE MAIS G LA FLEMME
+================================================================================*/ 
 if(resultLine?.calledNumbers.length <= resultColumn?.calledNumbers.length){
     let arrayMatrixed = resultLine.matrix.flat()
     let resultSumArray = sumArray(substractArrays(arrayMatrixed,resultLine.calledNumbers));
@@ -796,3 +798,4 @@ if(resultLine?.calledNumbers.length <= resultColumn?.calledNumbers.length){
 
     console.log("Result Day 4 Part 1 : " +  lastNumber * resultSumArray)
 }
+
