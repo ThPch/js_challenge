@@ -2052,7 +2052,7 @@ const result = levels.reduce((acc, curr) => {
     return acc
 })
 
-console.log(count)
+console.log("Result Day 1 Part 1 : " + count)
 
 
 // --- Part Two ---
@@ -2113,5 +2113,4 @@ const measuringWindows = (levels, sumOfThree, count) => {
     }
 }
 
- console.log(measuringWindows(levels, 0, 0));
-
+console.log("Result Day 1 Part 2 : " + measuringWindows(levels, 0, 0))
