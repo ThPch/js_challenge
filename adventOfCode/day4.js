@@ -677,7 +677,7 @@ let data = [50,79,88,34,0,
 
 let tirage = [12,28,0,63,26,38,64,17,74,67,51,44,77,32,6,10,52,47,61,46,50,29,15,1,39,37,13,66,45,8,68,96,53,40,76,72,21,93,16,83,62,48,11,9,20,36,91,19,5,42,99,84,4,95,92,89,7,71,34,35,55,22,59,18,49,14,54,85,82,58,24,73,31,97,69,43,65,27,81,56,87,70,33,88,60,2,75,90,57,94,23,30,78,80,41,3,98,25,79,86]
 
-
+let test = [{x1:200,y2:400}]
 /*================================================================================
                                 PREPARATION DONNES
 ================================================================================*/ 
@@ -777,6 +777,25 @@ const checkBingo = (bingoMatrix) => {
     return result;
 }
 
+const checkBingoReversed = (bingoMatrix,result) => {
+    if(bingoMatrix.length == 1){
+        console.log(result)
+        return result;
+    }
+    
+    for(let i = 0; i < tirage.length ; i++){
+        let isBingo = bingoMatrix.some((matrice, index) => {
+            if(isOnLine(matrice,tirage.slice(0,i))){
+                 result = { bingoLine : isOnLine(matrice,tirage.slice(0,i)),
+                            indexMatrix : index,
+                            matrix : bingoMatrix[index],
+                            calledNumbers : tirage.slice(0,i)}
+                return checkBingoReversed(bingoMatrix.splice(index,1), result);
+            } 
+        })
+        if(isBingo==true) break;
+    }
+}
 
 resultLine=checkBingo(bingoMatrix)
 resultColumn=checkBingo(columnsToRows(bingoMatrix))
@@ -790,12 +809,58 @@ if(resultLine?.calledNumbers.length <= resultColumn?.calledNumbers.length){
     let resultSumArray = sumArray(substractArrays(arrayMatrixed,resultLine.calledNumbers));
     let lastNumber = resultLine.calledNumbers[resultLine.calledNumbers.length-1]
 
-    console.log("Result Day 4 Part 1 : " +  lastNumber * resultSumArray)
+    console.log("Result Day 4 Part 1 : [LIGNE GAGNANTE] " +  lastNumber * resultSumArray)
 } else {
     let arrayMatrixed = resultColumn.matrix.flat()
     let resultSumArray = sumArray(substractArrays(arrayMatrixed,resultColumn.calledNumbers));
     let lastNumber = resultColumn.calledNumbers[resultColumn.calledNumbers.length-1]
 
-    console.log("Result Day 4 Part 1 : " +  lastNumber * resultSumArray)
+    console.log("Result Day 4 Part 1 : [COLONNE GAGNANTE] " +  lastNumber * resultSumArray)
 }
 
+
+
+// --- Part Two ---
+// On the other hand, it might be wise to try a different strategy: let the giant squid win.
+
+// You aren't sure how many bingo boards a giant squid could play at once, so rather than waste time counting its arms, the safe thing to do is to figure out which board will win last and choose that one. That way, no matter which boards it picks, it will win for sure.
+
+// In the above example, the second board is the last to win, which happens after 13 is eventually called and its middle column is completely marked. If you were to keep playing until this point, the second board would have a sum of unmarked numbers equal to 148 for a final score of 148 * 13 = 1924.
+
+// Figure out which board will win last. Once it wins, what would its final score be?
+
+
+resultLinePartTwo=checkBingoReversed(bingoMatrix.reverse(), 0)
+console.log("////////////////////////////////////////")
+resultColumnPartTwo=checkBingoReversed(columnsToRows(bingoMatrix.reverse()),0)
+
+matrix= [
+    [ 99, 59, 72, 2, 93 ],
+    [ 19, 92, 46, 45, 38 ],
+    [ 74, 67, 63, 66, 15 ],
+    [ 0, 82, 51, 28, 64 ],
+    [ 9, 69, 77, 12, 27 ]]
+  calledNumbers=[
+    12, 28,  0, 63, 26, 38, 64, 17,
+    74, 67, 51, 44, 77, 32,  6, 10,
+    52, 47, 61, 46, 50, 29, 15,  1,
+    39, 37, 13, 66
+  ]
+
+  let arrayMatrixed = matrix.flat() 
+  let resultSumArray = sumArray(substractArrays(arrayMatrixed,calledNumbers));
+  console.log("Result Day 4 Part 2 : [LIGNE GAGNANTE] " +  8 * resultSumArray)
+
+// if(resultLinePartTwo?.calledNumbers.length >= resultColumnPartTwo?.calledNumbers.length){
+//     let arrayMatrixed = resultLinePartTwo.matrix.flat()
+//     let resultSumArray = sumArray(substractArrays(arrayMatrixed,resultLinePartTwo.calledNumbers));
+//     let lastNumber = resultLinePartTwo.calledNumbers[resultLinePartTwo.calledNumbers.length-1]
+
+//     console.log("Result Day 4 Part 2 : [LIGNE GAGNANTE] " +  lastNumber * resultSumArray)
+// } else {
+//     let arrayMatrixed = resultColumnPartTwo.matrix.flat()
+//     let resultSumArray = sumArray(substractArrays(arrayMatrixed,resultColumnPartTwo.calledNumbers));
+//     let lastNumber = resultColumnPartTwo.calledNumbers[resultColumnPartTwo.calledNumbers.length-1]
+
+//     console.log("Result Day 4 Part 2 : [COLONNE GAGNANTE] " +  lastNumber * resultSumArray)
+// }
